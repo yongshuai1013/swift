@@ -2097,8 +2097,8 @@ function(add_swift_target_library name)
   if(NOT SWIFTLIB_SHARED AND
      NOT SWIFTLIB_STATIC AND
      NOT SWIFTLIB_OBJECT_LIBRARY)
-    message(FATAL_ERROR
-        "Either SHARED, STATIC, or OBJECT_LIBRARY must be specified")
+    # PaxIDX: Default to STATIC if none specified (for iOS on-device build)
+    set(SWIFTLIB_STATIC TRUE)
   endif()
 
   # In the standard library and overlays, warn about implicit overrides
