@@ -897,8 +897,8 @@ function(add_swift_target_library_single target name)
      NOT SWIFTLIB_SINGLE_STATIC AND
      NOT SWIFTLIB_SINGLE_OBJECT_LIBRARY AND
      NOT SWIFTLIB_SINGLE_ONLY_SWIFTMODULE)
-    message(FATAL_ERROR
-        "Either SHARED, STATIC, or OBJECT_LIBRARY must be specified")
+    # PaxIDX: Default to STATIC if none specified (for iOS on-device build)
+    set(SWIFTLIB_SINGLE_STATIC TRUE)
   endif()
 
   if(NOT DEFINED SWIFTLIB_INSTALL_BINARY_SWIFTMODULE)
