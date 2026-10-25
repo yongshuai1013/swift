@@ -515,7 +515,7 @@ extension String {
 
 extension String {
   fileprivate func escapedForLLDB() -> String {
-    guard #available(macOS 13, *) else {
+    guard #available(macOS 13, iOS 16.0, *) else {
       guard self.firstIndex(of: "$") != nil else {
         return self
       }
@@ -531,7 +531,7 @@ extension String {
       return result
     }
 
-    return self.replacingOccurrences(of: "$", with: "\\$")
+    return self.replacing("$", with: "\\$")
   }
 }
 
