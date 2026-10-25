@@ -531,7 +531,7 @@ extension String {
       return result
     }
 
-    return self.replacing("$", with: "\\$")
+    return self.replacingOccurrences(of: "$", with: "\\$")
   }
 }
 
