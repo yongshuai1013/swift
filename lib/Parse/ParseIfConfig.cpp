@@ -781,14 +781,14 @@ static std::optional<std::pair<bool, bool>> evaluateWithSwiftIfConfig(
     SourceRange conditionRange,
     bool shouldEvaluate
 ) {
-#if SWIFT_BUILD_SWIFT_SYNTAX
-  return evaluateOrDefault(
-      parser.Context.evaluator,
-      EvaluateIfConditionRequest{&parser.SF, conditionRange, shouldEvaluate},
-      std::pair(false, false));
-#else
+  // PaxIDX (paxidx-ios15): the on-device frontend ships without ASTGen -
+  // the _CompilerSwift* swift-syntax compiler libraries exist only as
+  // macOS host builds, so libswiftASTGen is excluded from the device
+  // toolchain and its C entry points are stubs. Report the Swift #if
+  // evaluator as unavailable so every #if uses the native C++ evaluator
+  // (evaluateIfConfigCondition below) - exactly what a C++-only build
+  // (SWIFT_BUILD_SWIFT_SYNTAX=OFF) does upstream.
   return std::nullopt;
-#endif
 }
 
 /// Parse and populate a #if ... #endif directive.
